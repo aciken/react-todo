@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { Addform } from './Addfrom';
 
-function App() {
-  const [count, setCount] = useState(0)
+export function App(){
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  const [arr, setarr] = useState([]);
+
+  const AddTodo = (text) =>{
+      setarr(prevArr => {
+          return [
+                  ...prevArr, 
+          {id: crypto.randomUUID(), text, checked: false}
+      ]})
+  }
+
+  const handleFunct = (key) =>{
+    arr.forEach((item) => {
+        if(item.id == key){
+            console.log('yes')
+            console.log(arr)
+            if(item.checked == false){
+                item.checked = true
+        } else {
+            item.checked = false
+        }
+        setarr([...arr])
+        
+    }})
 }
 
-export default App
+const deleteFunct = (key) =>  setarr(arr.filter(item => item.id !== key))
+  
+
+
+
+
+  return (
+    <Addform AddTodo={AddTodo} arr={arr} handleFunct={handleFunct} deleteFunct={deleteFunct}/>
+  )
+}
